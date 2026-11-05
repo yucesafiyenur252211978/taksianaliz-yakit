@@ -1,0 +1,35 @@
+
+name: Ankara Yakit Fiyatlarini Guncelle
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  yakit-guncelle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu indir
+        uses: actions/checkout@v4
+
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Paketleri yukle
+        run: npm install
+
+      - name: Google Cloud baglantisi
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/941850175620/locations/global/workloadIdentityPools/taksianaliz-github/providers/github-actions'
+          service_account: 'taksianaliz-yakit-updater@taksianaliz.iam.gserviceaccount.com'
+
+      - name: Yakit fiyatlarini guncelle
+        run: npm run update

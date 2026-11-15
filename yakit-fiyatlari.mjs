@@ -34,7 +34,7 @@ const fiyatlar = ankara.find('td').slice(1).map((_, td) => {
 const kayitlar = {
   benzin: fiyatlar[0],
   motorin: fiyatlar[1],
-  lpg: fiyatlar[5]
+  lpg: fiyatlar[4]
 };
 
 for (const [tur, fiyat] of Object.entries(kayitlar)) {
